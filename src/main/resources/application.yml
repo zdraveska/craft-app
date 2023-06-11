@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+  mail:
+    password:
+    port: 1025
+    username: craft@gmail.com
+    host: localhost
+  servlet:
+    multipart:
+      max-file-size: 500KB
+      max-request-size: 500KB
+  jpa:
+    hibernate:
+      ddl-auto: create
+#    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        jdbc.lob.non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        generate-ddl: true
+
+application:
+  security:
+    cookie:
+      secure: false
+      expiration: 1800000
+    token:
+      secret: zdtlD3JK56m6wTTgsNFhqzjqP
+      expiration: 1800000
+      refresh:
+        expiration: 7200000
+  url:
+    token:
+      expiration: 1440
+    baseUrl: http://localhost:8080

@@ -1,0 +1,19 @@
+package mk.ukim.finki.draftcraft.dto.input.user;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Data;
+
+
+@Data
+@Builder
+public class LoginRequestDto {
+
+  @NotNull
+//  @Email
+  private String username;
+
+  @NotNull
+  private String password;
+
+}
