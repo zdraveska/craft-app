@@ -4,9 +4,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.users.Name;
+import mk.ukim.finki.draftcraft.domain.exceptions.TokenIsNotValidException;
+import mk.ukim.finki.draftcraft.domain.exceptions.UserNotFoundException;
 import mk.ukim.finki.draftcraft.domain.users.User;
-import mk.ukim.finki.draftcraft.domain.users.UserRole;
 import mk.ukim.finki.draftcraft.dto.LoginResponseDto;
 import mk.ukim.finki.draftcraft.dto.input.user.LoginRequestDto;
 import mk.ukim.finki.draftcraft.mapper.UserMapper;
@@ -20,11 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -32,66 +28,35 @@ import java.util.List;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-//    private final JwtTokenUtil jwtTokenUtil;
+    //    private final JwtTokenUtil jwtTokenUtil;
     private final JwtService jwtService;
     private final CookieUtil cookieUtil;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-
-    @GetMapping
-    public ResponseEntity<List<User>> users() {
-        User user = User.builder()
-                .email("ema.zdraveska@valtech.com")
-                .name(new Name("Ema", "Zdr"))
-                .phoneNumber("071292523")
-                .username("ema")
-                .password(passwordEncoder.encode("pass"))
-                .userRole(UserRole.BUYER)
-                .build();
-        userRepository.save(user);
-        List<User> users = userRepository.findAll();
-        return ResponseEntity.ok().body(users);
-    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(HttpServletResponse response, @Valid @RequestBody LoginRequestDto loginRequest) {
-//        User saveUser = User.builder()
-//                .email("ema.zdraveska@valtech.com")
-//                .name(new Name("Ema", "Zdr"))
-//                .phoneNumber("071292523")
-//                .username("ema")
-//                .password(passwordEncoder.encode("pass"))
-//                .userRole(UserRole.BUYER)
-//                .build();
-//        userRepository.save(saveUser);
         try {
-            Authentication authenticate = authenticationManager
-                    .authenticate(
-                            new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-            User user = (User) authenticate.getPrincipal();
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            var user = userRepository.findByEmail(loginRequest.getEmail())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
             String token = jwtService.generateToken(user);
             String refresh = jwtService.generateRefreshToken(user);
 
             response.addCookie(cookieUtil.createTokenCookie(token));
             response.addCookie(cookieUtil.createRefreshTokenCookie(refresh));
 
-
-//      UserDto dto = UserDto.builder()
-//              .image(user.getImage())
-//              .id(user.getId())
-//              .email(user.getEmail())
-//              .surname()
-//              .build()
             return ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, token)
-                    .body(userMapper.toLoginResponseDto(userMapper.toDto(user), user.getUserRole()));
+                    .body(userMapper.toLoginResponseDto(userMapper.toDto(user), user.getRole()));
         } catch (BadCredentialsException ex) {
             System.out.println(ex.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
+    //TODO
     @CacheEvict(cacheNames = {"user"}, allEntries = true)
 //    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/logout")
@@ -103,20 +68,21 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-//    @PostMapping("/refresh")
-//    public ResponseEntity<LoginResponseDto> refreshToken(
-//            @CookieValue(name = "refresh-token", required = false) String refreshToken, HttpServletResponse response) {
-//        if (!jwtTokenUtil.validate(refreshToken)) {
-//            throw new TokenIsNotValidException();
-//        }
-//        String username = jwtTokenUtil.getUsername(refreshToken);
-//        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
-//        String newToken = jwtTokenUtil.generateToken(user);
-//        response.addCookie(cookieUtil.createTokenCookie(newToken));
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.AUTHORIZATION, newToken)
-//                .body(userMapper.toLoginResponseDto(userMapper.toDto(user), user.getUserRole()));
-//    }
+    //TODO
+    //    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PostMapping("/refresh")
+    public ResponseEntity<LoginResponseDto> refreshToken(
+            @CookieValue(name = "refresh-token", required = false) String refreshToken, HttpServletResponse response) {
+        if (!jwtService.validate(refreshToken)) {
+            throw new TokenIsNotValidException();
+        }
+        String username = jwtService.extractUserName(refreshToken);
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new UserNotFoundException(username));
+        String newToken = jwtService.generateToken(user);
+        response.addCookie(cookieUtil.createTokenCookie(newToken));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, newToken)
+                .body(userMapper.toLoginResponseDto(userMapper.toDto(user), user.getRole()));
+    }
 
 }

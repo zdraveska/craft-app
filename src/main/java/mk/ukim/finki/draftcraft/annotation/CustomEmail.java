@@ -17,9 +17,9 @@ public class CustomEmail implements ConstraintValidator<ValidEmail, String> {
   public boolean isValid(String email,
       ConstraintValidatorContext cxt) {
     EmailValidator emailValidator = new EmailValidator();
-    boolean valid = email != null && emailValidator.isValid(email, cxt) && email.matches("^(.+)@mail.com");
+    boolean valid = email != null && emailValidator.isValid(email, cxt) && email.matches("^(.+)@gmail.com");
     if (!valid) {
-      log.debug("Invalid email");
+      log.info("Invalid email");
     }
     return valid;
   }

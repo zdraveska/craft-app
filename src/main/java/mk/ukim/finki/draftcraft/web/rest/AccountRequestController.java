@@ -7,7 +7,6 @@ import mk.ukim.finki.draftcraft.dto.AccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateAccountRequestDto;
 import mk.ukim.finki.draftcraft.service.AccountRequestService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +24,8 @@ public class AccountRequestController {
     return ResponseEntity.ok().body(accountRequestService.createAccountRequest(createAccountRequestDto));
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
+  //TODO
+  //  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping(value = "/account-requests")
   public ResponseEntity<List<AccountRequestDto>> getAllAccountRequests(
       @RequestParam(required = false) AccountRequestStatus status,
@@ -35,17 +35,17 @@ public class AccountRequestController {
   }
 
   @PutMapping(value = "/account-requests/confirm-email")
-  public ResponseEntity<Void> confirmEmail(String token) {
+  public ResponseEntity<Void> confirmEmail(@RequestParam String token) {
     accountRequestService.confirmEmail(token);
     return ResponseEntity.ok().build();
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
+//  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping(value = "/account-requests/{id}")
-  public ResponseEntity<AccountRequestDto> handleAccountRequest(
+  public ResponseEntity<AccountRequestDto> confirmAccountRequest(
       @RequestParam AccountRequestStatus status,
       @PathVariable Long id) {
-    return ResponseEntity.ok().body(accountRequestService.handleAccountRequest(id, status));
+    return ResponseEntity.ok().body(accountRequestService.acceptAccountRequest(id, status));
   }
 
 }

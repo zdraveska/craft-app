@@ -22,7 +22,7 @@ public class CustomPhoneNumber implements ConstraintValidator<ValidPhoneNumber, 
     boolean valid = phoneNumber != null && (phoneNumber.matches(mobileNumberWithCountryCallingCode)
         || phoneNumber.matches(mobileNumberRegex) || phoneNumber.matches(homeNumberRegex));
     if (!valid) {
-      log.debug("Invalid phone number");
+      log.info("Invalid phone number");
       throw new InvalidInputException();
     }
     return true;

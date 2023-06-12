@@ -17,8 +17,6 @@ public class UserDto {
 
   Name name;
 
-  String surname;
-
   String email;
 
   Image image;

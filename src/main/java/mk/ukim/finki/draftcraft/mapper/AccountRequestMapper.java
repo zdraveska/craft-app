@@ -17,20 +17,26 @@ public interface AccountRequestMapper {
 
   AccountRequestDto toDto(AccountRequest accountRequest);
 
+  @Mapping(target = "id", ignore = true)
   @Mapping(target = "status", constant = "PENDING")
-  //todo return false
-  @Mapping(target = "emailConfirmed", constant = "true")
+  @Mapping(target = "emailConfirmed", constant = "false")
   @Mapping(target = "createdDate", source = "date")
   @Mapping(target = "role", source = "createAccountRequestDto", qualifiedByName = "mapRole")
   AccountRequest toEntity(CreateAccountRequestDto createAccountRequestDto, LocalDate date);
 
   List<AccountRequestDto> listToDto(List<AccountRequest> accountRequests);
 
+  @Mapping(target = "role", source = "accountRequest", qualifiedByName = "mapRole")
   CreateUserDto toCreateUserDto(AccountRequest accountRequest);
 
   @Named("mapRole")
   default UserRole mapRole(CreateAccountRequestDto createAccountRequestDto) {
     return UserRole.valueOf(createAccountRequestDto.getRole());
+  }
+
+  @Named("mapRole")
+  default String mapRole(AccountRequest accountRequest) {
+    return String.valueOf(accountRequest.getRole());
   }
 
 }

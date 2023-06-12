@@ -30,13 +30,13 @@ public class ShopServiceImpl implements ShopService {
 //    List<Product> products = parseProductsFromCsv(shop, shop);
 //    products = productRepository.saveAll(products);
 //    shop.setProducts(products);
-    log.debug("Created shop {}", shop.getName());
+    log.info("Created shop {}", shop.getName());
     return shopMapper.toDto(shop);
   }
 
   @Override
   public Optional<Shop> getShop(Long id) {
-    log.debug("Find Shop by id: " + id);
+    log.info("Find Shop by id: " + id);
     return shopRepository.findById(id);
   }
 
@@ -49,7 +49,7 @@ public class ShopServiceImpl implements ShopService {
 
 //  @Scheduled(cron = "0 0 8 * * MON")
 //  protected void cleanUpShopEntity() {
-//    log.debug("Deleting unused Shops");
+//    log.info("Deleting unused Shops");
 //    ShopRepository.deleteByRestaurant(null);
 //  }
 

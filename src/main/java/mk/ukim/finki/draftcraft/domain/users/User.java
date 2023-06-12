@@ -23,9 +23,6 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(unique = true, name = "username")
-    String username;
-
     @Column(name = "name")
     Name name;
 
@@ -40,22 +37,22 @@ public class User implements UserDetails {
 
     @Column(name = "role")
     @Enumerated(value = EnumType.STRING)
-    UserRole userRole;
+    UserRole role;
 
     @PrimaryKeyJoinColumn
     @OneToOne
     Image image;
 
-    private boolean isAccountNonExpired = true;
-    private boolean isAccountNonLocked = true;
-    private boolean isCredentialsNonExpired = true;
-    private boolean isEnabled = true;
+    private final boolean isAccountNonExpired = true;
+    private final boolean isAccountNonLocked = true;
+    private final boolean isCredentialsNonExpired = true;
+    private final boolean isEnabled = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.toString()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toString()));
 
         return authorities;
     }

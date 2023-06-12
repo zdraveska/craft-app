@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+//TODO
+
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
@@ -68,8 +70,7 @@ public class ProductController {
         imageShop = imageRepository.save(imageShop);
         imagePost = imageRepository.save(imagePost);
         var user = User.builder()
-                .email("email@mail.com")
-                .username("username")
+                .email("email@gmail.com")
                 .password("pass")
                 .name(new Name("name", "surname"))
                 .phoneNumber("071292523")

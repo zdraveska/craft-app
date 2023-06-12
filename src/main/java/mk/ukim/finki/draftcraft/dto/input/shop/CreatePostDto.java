@@ -31,8 +31,10 @@ public class CreatePostDto {
     @NotEmpty
     Integer priceRangeMax;
 
+    @NotEmpty
     String productCategory;
 
+    @NotEmpty
     String shopCategory;
 
     @NotEmpty

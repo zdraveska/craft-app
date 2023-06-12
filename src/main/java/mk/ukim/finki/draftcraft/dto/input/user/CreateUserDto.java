@@ -31,14 +31,6 @@ public class CreateUserDto {
   String email;
 
   @NotBlank
-  @Size(min = 1, max = 50)
-  String username;
-
-  @NotBlank
-  @Size(min = 1, max = 50)
-  String password;
-
-  @NotBlank
   @NotEmpty
   @ValidPhoneNumber
   @Size(min = 1, max = 50)

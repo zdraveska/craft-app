@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.draftcraft.domain.users.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.users.UserRole;
 
 import java.time.LocalDate;
 
@@ -21,13 +22,11 @@ public class AccountRequestDto {
 
   String surname;
 
-  String username;
-
   String email;
 
-  String password;
+  String phoneNumber;
 
-  String role;
+  UserRole role;
 
   AccountRequestStatus status;
 

@@ -37,12 +37,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto createPost(CreatePostDto createPostDto) {
         String username = getUsername();
-        User user = userService.findByUsername(username).orElseThrow(()->new UserNotFoundException(username));
+        User user = userService.findByEmail(username).orElseThrow(()->new UserNotFoundException(username));
 
         Post post = postMapper.createDtoToEntity(createPostDto, user);
         post.setDate(LocalDate.now());
         postRepository.save(post);
-        log.debug("Post {} created", post);
+        log.info("Post {} created", post);
         return postMapper.toDto(post);
     }
 
@@ -51,7 +51,7 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
 
         postRepository.delete(post);
-        log.debug("Post has been deleted");
+        log.info("Post has been deleted");
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PostServiceImpl implements PostService {
 
         post = postMapper.updateDtoToEntity(post, updatePostDto);
         postRepository.save(post);
-        log.debug("Post {} modified", post);
+        log.info("Post {} modified", post);
         return postMapper.toDto(post);
     }
 

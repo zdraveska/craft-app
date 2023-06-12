@@ -1,16 +1,13 @@
 package mk.ukim.finki.draftcraft.domain.common;
 
 public enum EmailType {
-//TODO name of web app
 
-  CREATE_USER("Welcome",
-      "You are now an user of *", "Set your password"),
-  CONFIRM_EMAIL_ADDRESS("Confirm email address!",
-      "In order to become an user of *, you have to confirm your email address.", "Confirm"),
-  RESET_PASSWORD("Reset your password!",
-      "If you have forgotten or just want to change your password, click on the following button: ", "Reset your password"),
-  ACCOUNT_REQUEST_DECLINED("Request declined!",
-      "Your account request was declined.","");
+  CREATE_USER("Добредојдовте!",
+      "Сега сте корисник на Craftsy e-shop апликацијата. За да можете да се најавите на вашиот профил треба да сетирате лозинка", "Креирај лозинка"),
+  CONFIRM_EMAIL_ADDRESS("Потврди ја email адресата!",
+      "За да станете корисник на Craftsy e-shop апликацијата, треба да ја потврдите вашата email адреса.", "Потврди"),
+  RESET_PASSWORD("Ресетирај ја лозинката!",
+      "Доколку ја имате заборавено вашата лозинка или сакате да ја промените, кликнете на следното копче: ", "Ресетирај лозинка");
 
   private final String subject;
   private final String body;

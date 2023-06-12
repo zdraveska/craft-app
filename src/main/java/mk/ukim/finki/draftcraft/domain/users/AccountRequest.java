@@ -26,13 +26,14 @@ public class AccountRequest {
   @Column(name = "surname")
   String surname;
 
-  @Column(name = "username")
-  String username;
-
   @Column(name = "email")
   String email;
 
+  @Column(name = "phoneNumber")
+  String phoneNumber;
+
   @Column(name = "role")
+  @Enumerated(EnumType.STRING)
   UserRole role;
 
   @Column(name = "status")

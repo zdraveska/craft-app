@@ -15,5 +15,5 @@ public interface AccountRequestService {
 
   void confirmEmail(String token);
 
-  AccountRequestDto handleAccountRequest(Long id, AccountRequestStatus status);
+  AccountRequestDto acceptAccountRequest(Long id, AccountRequestStatus status);
 }

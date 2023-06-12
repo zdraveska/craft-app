@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.ITemplateEngine;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 
@@ -21,10 +21,10 @@ public class EmailServiceImpl implements EmailService {
 
   private final JavaMailSender javaMailSender;
   private final String sender;
-  private final ITemplateEngine templateEngine;
+  private final TemplateEngine templateEngine;
 
   public EmailServiceImpl(JavaMailSender javaMailSender,
-      @Value("${spring.mail.username}") String sender, ITemplateEngine templateEngine) {
+      @Value("${spring.mail.username}") String sender, TemplateEngine templateEngine) {
     this.javaMailSender = javaMailSender;
     this.sender = sender;
     this.templateEngine = templateEngine;
@@ -36,7 +36,7 @@ public class EmailServiceImpl implements EmailService {
     context.setVariable("type", type);
     context.setVariable("subject",emailDto.getSubject());
     context.setVariable("userName", emailDto.getToName());
-    context.setVariable("userSurname", emailDto.getToSurname());
+    context.setVariable("surname", emailDto.getToSurname());
     context.setVariable("url", emailDto.getUrl());
     context.setVariable("message", emailDto.getBody());
 
@@ -53,7 +53,7 @@ public class EmailServiceImpl implements EmailService {
       throw new EmailException(e.getMessage());
     }
 
-    log.debug("Sending email");
+    log.info("Sending email");
     javaMailSender.send(mimeMessage);
   }
 

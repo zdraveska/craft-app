@@ -43,7 +43,7 @@ public class AccountRequestServiceImpl implements AccountRequestService {
   private final TokenService tokenService;
   private final UserService userService;
 
-  static final String CONFIRM_EMAIL_PATH = "/confirm-email?token=";
+  static final String CONFIRM_EMAIL_PATH = "/api/account-requests/confirm-email?token=";
 
   @CacheEvict(cacheNames = {"account-requests"}, allEntries = true)
   @Override
@@ -61,10 +61,12 @@ public class AccountRequestServiceImpl implements AccountRequestService {
     String tokenValue = tokenService.createUrlToken(accountRequest, null).getToken();
     String url = tokenService.generateEmailUrl(tokenValue, CONFIRM_EMAIL_PATH);
 
-    EmailDto emailDto = generateEmail(createAccountRequestDto.getEmail(), createAccountRequestDto.getName(),
-        createAccountRequestDto.getSurname(),
-        EmailType.CONFIRM_EMAIL_ADDRESS, url);
-    log.debug("Account request {} created", accountRequest);
+    EmailDto emailDto = generateEmail(createAccountRequestDto.getEmail(),
+            createAccountRequestDto.getName(),
+            createAccountRequestDto.getSurname(),
+            EmailType.CONFIRM_EMAIL_ADDRESS,
+            url);
+    log.info("Account request {} created", accountRequest);
 
     emailService.sendSimpleEmail(emailDto, EmailType.CONFIRM_EMAIL_ADDRESS);
 
@@ -87,7 +89,7 @@ public class AccountRequestServiceImpl implements AccountRequestService {
 
   @CacheEvict(cacheNames = {"account-requests"}, key = "#id", allEntries = true)
   @Override
-  public AccountRequestDto handleAccountRequest(Long id, AccountRequestStatus status) {
+  public AccountRequestDto acceptAccountRequest(Long id, AccountRequestStatus status) {
     AccountRequest accountRequest = accountRequestRepository.findById(id)
         .orElseThrow(() -> new AccountRequestNotFoundException(id));
 
@@ -100,13 +102,9 @@ public class AccountRequestServiceImpl implements AccountRequestService {
     if (AccountRequestStatus.APPROVED.equals(status)) {
       CreateUserDto createUserDto = accountRequestMapper.toCreateUserDto(accountRequest);
       userService.createUser(createUserDto);
-      log.debug("New user has been successfully added");
+      log.info("New user has been successfully added");
     } else {
-      EmailDto emailDto = generateEmail(accountRequest.getEmail(), accountRequest.getName(),
-          accountRequest.getSurname(),
-          EmailType.ACCOUNT_REQUEST_DECLINED, null);
-      emailService.sendSimpleEmail(emailDto, EmailType.ACCOUNT_REQUEST_DECLINED);
-      log.debug("The request was denied");
+      log.info("The request was denied");
     }
 
     return accountRequestMapper.toDto(accountRequest);
@@ -124,7 +122,7 @@ public class AccountRequestServiceImpl implements AccountRequestService {
     accountRequest.setEmailConfirmed(true);
 
     accountRequestRepository.save(accountRequest);
-    log.debug("Confirm email");
+    log.info("Confirm email");
 
   }
 

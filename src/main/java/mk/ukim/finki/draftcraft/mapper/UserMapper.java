@@ -20,25 +20,32 @@ public interface UserMapper {
     @Mapping(target = "image")
     UserDto toDto(User user);
 
-    @Mapping(target = "name", source = "createUserDto", qualifiedByName = "createFullName")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "createUserDto", qualifiedByName = "mapFullName")
+    @Mapping(target = "role", source = "createUserDto.role", qualifiedByName = "mapRole")
     User createUserDtoToEntity(CreateUserDto createUserDto);
 
-    @Mapping(target = "name", source = "user", qualifiedByName = "createFullName")
+    @Mapping(target = "name", source = "user", qualifiedByName = "mapFullName")
     List<UserDto> listToDto(List<User> usersList);
 
-    @Mapping(target = "user.name", source = "updateUserDto", qualifiedByName = "createFullName")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user.name", source = "updateUserDto", qualifiedByName = "mapFullName")
     User updateDtoToEntity(@MappingTarget User user, UpdateUserDto updateUserDto);
 
-    @Named("createFullName")
+    @Named("mapFullName")
     default Name map(UpdateUserDto updateUserDto) {
         return new Name(updateUserDto.getName(), updateUserDto.getSurname());
     }
 
-    @Named("createFullName")
+    @Named("mapFullName")
     default Name map(CreateUserDto createUserDto) {
         return new Name(createUserDto.getName(), createUserDto.getSurname());
     }
 
+    @Named("mapRole")
+    default UserRole mapRole(String role) {
+        return UserRole.valueOf(role);
+    }
 
     LoginResponseDto toLoginResponseDto(UserDto userDto, UserRole role);
 }

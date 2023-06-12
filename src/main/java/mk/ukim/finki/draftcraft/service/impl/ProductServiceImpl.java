@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
     Product product = productMapper.createDtoToEntity(createProductDto, shop);
 
     productRepository.save(product);
-    log.debug("Product {} created", product);
+    log.info("Product {} created", product);
     return productMapper.toDto(product);
   }
 
@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
 
     productRepository.delete(product);
-    log.debug("Product has been deleted");
+    log.info("Product has been deleted");
   }
 
   @Override
@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
         .orElseThrow(() -> new ProductNotFoundException(productId));
     product = productMapper.updateDtoToEntity(product, updateProductDto);
     productRepository.save(product);
-    log.debug("Product {} modified", product);
+    log.info("Product {} modified", product);
     return shopMapper.toDto(product.getShop());
   }
 
