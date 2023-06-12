@@ -2,8 +2,8 @@ package mk.ukim.finki.draftcraft.impl;
 
 import mk.ukim.finki.draftcraft.domain.exceptions.ProductNotFoundException;
 import mk.ukim.finki.draftcraft.domain.exceptions.ShopNotFoundException;
-import mk.ukim.finki.draftcraft.domain.shop.Product;
-import mk.ukim.finki.draftcraft.domain.shop.Shop;
+import mk.ukim.finki.draftcraft.domain.model.shop.Product;
+import mk.ukim.finki.draftcraft.domain.model.shop.Shop;
 import mk.ukim.finki.draftcraft.dto.ProductDto;
 import mk.ukim.finki.draftcraft.dto.ShopDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreateProductDto;

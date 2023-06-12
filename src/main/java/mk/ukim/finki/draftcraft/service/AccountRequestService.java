@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.service;
 
 
-import mk.ukim.finki.draftcraft.domain.users.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
 import mk.ukim.finki.draftcraft.dto.AccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateAccountRequestDto;
 

@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.dto;
 
-import mk.ukim.finki.draftcraft.domain.common.Image;
-import mk.ukim.finki.draftcraft.domain.shop.Product;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.shop.Product;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package mk.ukim.finki.draftcraft.domain.shop;
+package mk.ukim.finki.draftcraft.domain.model.shop;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import mk.ukim.finki.draftcraft.domain.common.Image;
-import mk.ukim.finki.draftcraft.domain.users.User;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
 import org.apache.commons.lang3.Range;
 
 import java.time.LocalDate;

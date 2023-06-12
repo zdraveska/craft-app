@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.draftcraft.domain.exceptions.TokenIsNotValidException;
 import mk.ukim.finki.draftcraft.domain.exceptions.UserNotFoundException;
-import mk.ukim.finki.draftcraft.domain.users.User;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
 import mk.ukim.finki.draftcraft.dto.LoginResponseDto;
 import mk.ukim.finki.draftcraft.dto.input.user.LoginRequestDto;
 import mk.ukim.finki.draftcraft.mapper.UserMapper;

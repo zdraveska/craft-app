@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.mapper;
 
-import mk.ukim.finki.draftcraft.domain.shop.Post;
-import mk.ukim.finki.draftcraft.domain.users.User;
+import mk.ukim.finki.draftcraft.domain.model.shop.Post;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
 import mk.ukim.finki.draftcraft.dto.PostDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreatePostDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.UpdatePostDto;

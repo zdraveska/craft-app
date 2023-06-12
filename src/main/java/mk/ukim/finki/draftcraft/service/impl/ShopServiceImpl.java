@@ -3,7 +3,7 @@ package mk.ukim.finki.draftcraft.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mk.ukim.finki.draftcraft.domain.exceptions.ShopNotFoundException;
-import mk.ukim.finki.draftcraft.domain.shop.Shop;
+import mk.ukim.finki.draftcraft.domain.model.shop.Shop;
 import mk.ukim.finki.draftcraft.dto.ShopDto;
 import mk.ukim.finki.draftcraft.mapper.ShopMapper;
 import mk.ukim.finki.draftcraft.repository.ProductRepository;

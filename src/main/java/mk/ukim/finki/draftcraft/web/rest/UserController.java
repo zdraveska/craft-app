@@ -2,7 +2,7 @@ package mk.ukim.finki.draftcraft.web.rest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.users.UserRole;
+import mk.ukim.finki.draftcraft.domain.model.user.UserRole;
 import mk.ukim.finki.draftcraft.dto.UserDto;
 import mk.ukim.finki.draftcraft.dto.input.user.ChangeUserPasswordDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateUserDto;

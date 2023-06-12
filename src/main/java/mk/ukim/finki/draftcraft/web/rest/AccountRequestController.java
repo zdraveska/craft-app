@@ -2,7 +2,7 @@ package mk.ukim.finki.draftcraft.web.rest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.users.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
 import mk.ukim.finki.draftcraft.dto.AccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateAccountRequestDto;
 import mk.ukim.finki.draftcraft.service.AccountRequestService;

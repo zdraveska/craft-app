@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.common.Image;
-import mk.ukim.finki.draftcraft.domain.users.Name;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.user.Name;
 
 @Data
 @NoArgsConstructor

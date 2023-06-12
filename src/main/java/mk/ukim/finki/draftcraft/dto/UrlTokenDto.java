@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.users.AccountRequest;
-import mk.ukim.finki.draftcraft.domain.users.User;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
 
 import java.time.LocalDateTime;
 

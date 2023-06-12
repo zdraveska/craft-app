@@ -1,11 +1,11 @@
-package mk.ukim.finki.draftcraft.domain.users;
+package mk.ukim.finki.draftcraft.domain.model.user;
 
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mk.ukim.finki.draftcraft.domain.shop.Product;
+import mk.ukim.finki.draftcraft.domain.model.shop.Product;
 
 import java.util.List;
 

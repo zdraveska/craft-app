@@ -1,8 +1,8 @@
-package mk.ukim.finki.draftcraft.domain.shop;
+package mk.ukim.finki.draftcraft.domain.model.shop;
 
 import jakarta.persistence.*;
 import lombok.*;
-import mk.ukim.finki.draftcraft.domain.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package mk.ukim.finki.draftcraft.domain.users;
+package mk.ukim.finki.draftcraft.domain.model.user;
 
 import jakarta.persistence.*;
 import lombok.*;
-import mk.ukim.finki.draftcraft.domain.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

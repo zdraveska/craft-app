@@ -1,6 +1,6 @@
 package mk.ukim.finki.draftcraft.repository;
 
-import mk.ukim.finki.draftcraft.domain.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

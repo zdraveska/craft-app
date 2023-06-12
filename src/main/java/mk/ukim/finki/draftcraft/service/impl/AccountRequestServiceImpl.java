@@ -2,14 +2,14 @@ package mk.ukim.finki.draftcraft.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mk.ukim.finki.draftcraft.domain.common.EmailType;
-import mk.ukim.finki.draftcraft.domain.common.UrlToken;
+import mk.ukim.finki.draftcraft.domain.model.common.EmailType;
+import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.exceptions.AccountRequestAlreadyHandledException;
 import mk.ukim.finki.draftcraft.domain.exceptions.AccountRequestEmailIsAlreadyConfirmedException;
 import mk.ukim.finki.draftcraft.domain.exceptions.AccountRequestNotFoundException;
 import mk.ukim.finki.draftcraft.domain.exceptions.DuplicateEmailException;
-import mk.ukim.finki.draftcraft.domain.users.AccountRequest;
-import mk.ukim.finki.draftcraft.domain.users.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
 import mk.ukim.finki.draftcraft.dto.AccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.EmailDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateAccountRequestDto;

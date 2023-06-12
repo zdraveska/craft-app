@@ -1,4 +1,4 @@
-package mk.ukim.finki.draftcraft.domain.common;
+package mk.ukim.finki.draftcraft.domain.model.common;
 
 import jakarta.persistence.*;
 import lombok.*;

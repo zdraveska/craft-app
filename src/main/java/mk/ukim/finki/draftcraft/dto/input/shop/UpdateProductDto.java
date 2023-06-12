@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.common.Image;
-import mk.ukim.finki.draftcraft.domain.shop.ProductCategory;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.shop.ProductCategory;
 
 import java.util.List;
 

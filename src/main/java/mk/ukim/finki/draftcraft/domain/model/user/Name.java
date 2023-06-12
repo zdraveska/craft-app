@@ -1,4 +1,4 @@
-package mk.ukim.finki.draftcraft.domain.users;
+package mk.ukim.finki.draftcraft.domain.model.user;
 
 import java.io.Serializable;
 

@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.mapper;
 
-import mk.ukim.finki.draftcraft.domain.shop.Product;
-import mk.ukim.finki.draftcraft.domain.shop.Shop;
+import mk.ukim.finki.draftcraft.domain.model.shop.Product;
+import mk.ukim.finki.draftcraft.domain.model.shop.Shop;
 import mk.ukim.finki.draftcraft.dto.ProductDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreateProductDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.UpdateProductDto;

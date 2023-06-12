@@ -3,7 +3,7 @@ package mk.ukim.finki.draftcraft.service.impl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
-import mk.ukim.finki.draftcraft.domain.common.EmailType;
+import mk.ukim.finki.draftcraft.domain.model.common.EmailType;
 import mk.ukim.finki.draftcraft.domain.exceptions.EmailException;
 import mk.ukim.finki.draftcraft.dto.EmailDto;
 import mk.ukim.finki.draftcraft.service.EmailService;

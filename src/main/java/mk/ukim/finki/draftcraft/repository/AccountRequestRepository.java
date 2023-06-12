@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.repository;
 
-import mk.ukim.finki.draftcraft.domain.users.AccountRequest;
-import mk.ukim.finki.draftcraft.domain.users.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

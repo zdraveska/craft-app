@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.mapper;
 
-import mk.ukim.finki.draftcraft.domain.users.AccountRequest;
-import mk.ukim.finki.draftcraft.domain.users.UserRole;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
+import mk.ukim.finki.draftcraft.domain.model.user.UserRole;
 import mk.ukim.finki.draftcraft.dto.AccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateAccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateUserDto;

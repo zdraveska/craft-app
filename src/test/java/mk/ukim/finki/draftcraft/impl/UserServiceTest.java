@@ -1,10 +1,10 @@
 package mk.ukim.finki.draftcraft.impl;
 
-import mk.ukim.finki.draftcraft.domain.common.EmailType;
-import mk.ukim.finki.draftcraft.domain.common.UrlToken;
+import mk.ukim.finki.draftcraft.domain.model.common.EmailType;
+import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.exceptions.*;
-import mk.ukim.finki.draftcraft.domain.users.Name;
-import mk.ukim.finki.draftcraft.domain.users.User;
+import mk.ukim.finki.draftcraft.domain.model.user.Name;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
 import mk.ukim.finki.draftcraft.dto.EmailDto;
 import mk.ukim.finki.draftcraft.dto.UrlTokenDto;
 import mk.ukim.finki.draftcraft.dto.UserDto;

@@ -1,10 +1,10 @@
 package mk.ukim.finki.draftcraft.impl;
 
-import mk.ukim.finki.draftcraft.domain.common.UrlToken;
+import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.exceptions.TokenIsNotValidException;
 import mk.ukim.finki.draftcraft.domain.exceptions.TokenNotFoundException;
-import mk.ukim.finki.draftcraft.domain.users.AccountRequest;
-import mk.ukim.finki.draftcraft.domain.users.User;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
 import mk.ukim.finki.draftcraft.dto.UrlTokenDto;
 import mk.ukim.finki.draftcraft.mapper.TokenMapper;
 import mk.ukim.finki.draftcraft.repository.TokenRepository;

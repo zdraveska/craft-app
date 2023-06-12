@@ -1,4 +1,4 @@
-package mk.ukim.finki.draftcraft.domain.shop;
+package mk.ukim.finki.draftcraft.domain.model.shop;
 
 public enum ShopCategory {
     ONLINE,

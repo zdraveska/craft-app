@@ -1,8 +1,8 @@
 package mk.ukim.finki.draftcraft.repository;
 
 
-import mk.ukim.finki.draftcraft.domain.common.UrlToken;
-import mk.ukim.finki.draftcraft.domain.users.User;
+import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

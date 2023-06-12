@@ -1,6 +1,6 @@
 package mk.ukim.finki.draftcraft.repository;
 
-import mk.ukim.finki.draftcraft.domain.shop.Shop;
+import mk.ukim.finki.draftcraft.domain.model.shop.Shop;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

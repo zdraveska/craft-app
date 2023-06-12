@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.dto;
 
-import mk.ukim.finki.draftcraft.domain.common.Image;
-import mk.ukim.finki.draftcraft.domain.shop.ProductCategory;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.shop.ProductCategory;
 import lombok.*;
 
 import java.util.List;

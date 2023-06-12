@@ -1,14 +1,14 @@
 package mk.ukim.finki.draftcraft.utils;
 
 import lombok.SneakyThrows;
-import mk.ukim.finki.draftcraft.domain.common.Address;
-import mk.ukim.finki.draftcraft.domain.common.Image;
-import mk.ukim.finki.draftcraft.domain.common.UrlToken;
-import mk.ukim.finki.draftcraft.domain.shop.*;
-import mk.ukim.finki.draftcraft.domain.users.AccountRequest;
-import mk.ukim.finki.draftcraft.domain.users.AccountRequestStatus;
-import mk.ukim.finki.draftcraft.domain.users.Name;
-import mk.ukim.finki.draftcraft.domain.users.User;
+import mk.ukim.finki.draftcraft.domain.model.common.Address;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
+import mk.ukim.finki.draftcraft.domain.model.shop.*;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.model.user.Name;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
 import mk.ukim.finki.draftcraft.dto.UrlTokenDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreatePostDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreateProductDto;

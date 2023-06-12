@@ -1,12 +1,12 @@
 package mk.ukim.finki.draftcraft.dto;
 
-import mk.ukim.finki.draftcraft.domain.common.Address;
-import mk.ukim.finki.draftcraft.domain.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.common.Address;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.shop.ShopCategory;
+import mk.ukim.finki.draftcraft.domain.model.shop.ShopCategory;
 
 import java.util.List;
 
