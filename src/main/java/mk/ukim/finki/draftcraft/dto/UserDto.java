@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
-import mk.ukim.finki.draftcraft.domain.model.user.Name;
 
 @Data
 @NoArgsConstructor
@@ -15,7 +14,9 @@ public class UserDto {
 
   Long id;
 
-  Name name;
+  String name;
+
+  String username;
 
   String email;
 

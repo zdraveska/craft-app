@@ -1,22 +1,19 @@
 package mk.ukim.finki.draftcraft.utils;
 
 import lombok.SneakyThrows;
+import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
+import mk.ukim.finki.draftcraft.domain.enumeration.ShopCategory;
+import mk.ukim.finki.draftcraft.domain.enumeration.UserRole;
 import mk.ukim.finki.draftcraft.domain.model.common.Address;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.model.shop.*;
-import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
-import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
-import mk.ukim.finki.draftcraft.domain.model.user.Name;
-import mk.ukim.finki.draftcraft.domain.model.user.User;
+import mk.ukim.finki.draftcraft.domain.model.user.*;
 import mk.ukim.finki.draftcraft.dto.UrlTokenDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreatePostDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreateProductDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.UpdateProductDto;
-import mk.ukim.finki.draftcraft.dto.input.user.ChangeUserPasswordDto;
-import mk.ukim.finki.draftcraft.dto.input.user.CreateUserDto;
-import mk.ukim.finki.draftcraft.dto.input.user.PasswordDto;
-import mk.ukim.finki.draftcraft.dto.input.user.UpdateUserDto;
+import mk.ukim.finki.draftcraft.dto.input.user.*;
 import org.junit.jupiter.params.provider.Arguments;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -340,29 +337,26 @@ public class BaseTestData {
 
     protected User generateRandomUser(Boolean withId) {
         long random = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() + new Random().nextLong();
-        return getUser(withId ? random : null, random + "@gmail.com", "name", "surname", "username", "071123456");
+        return getUser(withId ? random : null, random + "@gmail.com", "name", "surname", "071123456", UserRole.BUYER);
     }
 
-    protected User getUser(Long id, String email, String name, String surname, String username, String phoneNumber) {
+    protected User getUser(Long id, String email, String name, String surname, String phoneNumber, UserRole role) {
         return User.builder()
                 .id(id)
                 .email(email)
-                .name(new Name(name, surname))
+                .name(name)
+                .surname(surname)
                 .phoneNumber(phoneNumber)
                 .image(generateImage())
+                .role(role)
                 .build();
     }
-//
-//    protected LoginRequestDto getLoginRequestDto(String username, String password) {
-//        return LoginRequestDto.builder()
-//                .username(username)
-//                .password(password)
-//                .build();
-//    }
-//
-////
-//
-////
 
+    protected LoginRequestDto getLoginRequestDto(String email, String password) {
+        return LoginRequestDto.builder()
+                .email(email)
+                .password(password)
+                .build();
+    }
 
 }

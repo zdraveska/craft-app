@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
-import mk.ukim.finki.draftcraft.domain.model.shop.ProductCategory;
+import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
 
 import java.util.List;
 

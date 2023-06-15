@@ -2,7 +2,7 @@ package mk.ukim.finki.draftcraft.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mk.ukim.finki.draftcraft.domain.model.common.EmailType;
+import mk.ukim.finki.draftcraft.domain.enumeration.EmailType;
 import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.exceptions.AccountRequestAlreadyHandledException;
 import mk.ukim.finki.draftcraft.domain.exceptions.AccountRequestEmailIsAlreadyConfirmedException;
@@ -22,8 +22,6 @@ import mk.ukim.finki.draftcraft.service.TokenService;
 import mk.ukim.finki.draftcraft.service.UserService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -75,15 +73,8 @@ public class AccountRequestServiceImpl implements AccountRequestService {
 
   @Cacheable(cacheNames = {"account-requests"})
   @Override
-  public List<AccountRequestDto> findAll(AccountRequestStatus status, Integer page, Integer size) {
-    Pageable pageable = PageRequest.of(page, size);
-    List<AccountRequest> accountRequests;
-    if (status != null) {
-      accountRequests = accountRequestRepository
-          .findAllByStatusAndEmailConfirmedIsTrueOrderByNameAscSurnameAsc(status, pageable);
-    } else {
-      accountRequests = accountRequestRepository.findAllByEmailConfirmedIsTrueOrderByNameAscSurnameAsc(pageable);
-    }
+  public List<AccountRequestDto> findAll() {
+    List<AccountRequest> accountRequests = accountRequestRepository.findAll();
     return accountRequestMapper.listToDto(accountRequests);
   }
 

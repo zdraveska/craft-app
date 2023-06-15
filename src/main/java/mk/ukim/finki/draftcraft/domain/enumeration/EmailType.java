@@ -1,4 +1,4 @@
-package mk.ukim.finki.draftcraft.domain.model.common;
+package mk.ukim.finki.draftcraft.domain.enumeration;
 
 public enum EmailType {
 

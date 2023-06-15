@@ -1,6 +1,6 @@
 package mk.ukim.finki.draftcraft.dto;
 
-import mk.ukim.finki.draftcraft.domain.model.user.UserRole;
+import mk.ukim.finki.draftcraft.domain.enumeration.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

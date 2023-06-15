@@ -2,6 +2,7 @@ package mk.ukim.finki.draftcraft.domain.model.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import mk.ukim.finki.draftcraft.domain.enumeration.UserRole;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,10 @@ public class User implements UserDetails {
     Long id;
 
     @Column(name = "name")
-    Name name;
+    String name;
+
+    @Column(name = "surname")
+    String surname;
 
     @Column(unique = true, name = "email")
     String email;

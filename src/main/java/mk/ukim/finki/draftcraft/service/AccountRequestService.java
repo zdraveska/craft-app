@@ -11,9 +11,9 @@ public interface AccountRequestService {
 
   AccountRequestDto createAccountRequest(CreateAccountRequestDto createAccountRequestDto);
 
-  List<AccountRequestDto> findAll(AccountRequestStatus status, Integer page, Integer size);
-
   void confirmEmail(String token);
+
+  List<AccountRequestDto> findAll();
 
   AccountRequestDto acceptAccountRequest(Long id, AccountRequestStatus status);
 }

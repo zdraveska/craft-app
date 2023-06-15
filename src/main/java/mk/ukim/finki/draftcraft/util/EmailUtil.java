@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.util;
 
 
-import mk.ukim.finki.draftcraft.domain.model.common.EmailType;
+import mk.ukim.finki.draftcraft.domain.enumeration.EmailType;
 import mk.ukim.finki.draftcraft.dto.EmailDto;
 
 public final class EmailUtil {

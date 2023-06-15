@@ -2,6 +2,7 @@ package mk.ukim.finki.draftcraft.domain.model.shop;
 
 import jakarta.persistence.*;
 import lombok.*;
+import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
 
 import java.util.List;

@@ -16,4 +16,6 @@ public interface JwtService {
     boolean validate(String token);
 
     Date getTokenExpiryFromJWT(String token);
+
+    String getUsername(String token);
 }

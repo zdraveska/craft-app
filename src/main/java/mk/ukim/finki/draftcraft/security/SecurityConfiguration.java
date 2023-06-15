@@ -31,10 +31,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(request ->
+                .authorizeHttpRequests(request -> request.anyRequest().permitAll())
 //                        request.requestMatchers("/api/account-requests").permitAll()
 //                                .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-//                        request.anyRequest().permitAll())
+//                                .requestMatchers(HttpMethod.POST, "/api/users/request-reset-password").permitAll()
+//                                .requestMatchers(HttpMethod.PUT, "/api/users/request-password").permitAll()
+//                                .requestMatchers(HttpMethod.PUT, "/api/account-requests/confirm-email").permitAll()
+//                                .requestMatchers(HttpMethod.PUT, "/api/account-requests/{id}").permitAll()
+//                                .requestMatchers(HttpMethod.POST, "/api/users/password-complexity").permitAll()
+//                                .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -3,6 +3,8 @@ package mk.ukim.finki.draftcraft.domain.model.shop;
 
 import jakarta.persistence.*;
 import lombok.*;
+import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
+import mk.ukim.finki.draftcraft.domain.enumeration.ShopCategory;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import mk.ukim.finki.draftcraft.domain.model.user.User;
 import org.apache.commons.lang3.Range;

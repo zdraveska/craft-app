@@ -4,8 +4,8 @@ package mk.ukim.finki.draftcraft.dto;
 import jakarta.persistence.ElementCollection;
 import lombok.Getter;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
-import mk.ukim.finki.draftcraft.domain.model.shop.ProductCategory;
-import mk.ukim.finki.draftcraft.domain.model.shop.ShopCategory;
+import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
+import mk.ukim.finki.draftcraft.domain.enumeration.ShopCategory;
 import org.apache.commons.lang3.Range;
 
 import java.time.LocalDate;

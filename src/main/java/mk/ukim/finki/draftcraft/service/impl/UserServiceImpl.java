@@ -3,15 +3,15 @@ package mk.ukim.finki.draftcraft.service.impl;
 import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;
 import lombok.extern.slf4j.Slf4j;
-import mk.ukim.finki.draftcraft.domain.model.common.EmailType;
-import mk.ukim.finki.draftcraft.domain.model.common.Image;
-import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
+import mk.ukim.finki.draftcraft.domain.enumeration.EmailType;
+import mk.ukim.finki.draftcraft.domain.enumeration.UserRole;
 import mk.ukim.finki.draftcraft.domain.exceptions.DuplicateEmailException;
 import mk.ukim.finki.draftcraft.domain.exceptions.IncorrectPassword;
 import mk.ukim.finki.draftcraft.domain.exceptions.InvalidPasswordException;
 import mk.ukim.finki.draftcraft.domain.exceptions.UserNotFoundException;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
+import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.model.user.User;
-import mk.ukim.finki.draftcraft.domain.model.user.UserRole;
 import mk.ukim.finki.draftcraft.dto.EmailDto;
 import mk.ukim.finki.draftcraft.dto.UserDto;
 import mk.ukim.finki.draftcraft.dto.input.user.ChangeUserPasswordDto;
@@ -29,8 +29,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -133,8 +131,7 @@ public UserServiceImpl(UserRepository userRepository,
   @Cacheable(cacheNames = {"user"})
   @Override
   public UserDto getMyProfile() {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String username = auth.getName();
+    String username = getUsername();
     log.info("Get my profile");
     User user = userRepository.findByEmail(username).orElseThrow(() -> new UserNotFoundException(username));
     return userMapper.toDto(user);
@@ -205,7 +202,7 @@ public UserServiceImpl(UserRepository userRepository,
     User user = findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     String tokenValue = tokenService.createUrlToken(null, user).getToken();
     String url = tokenService.generateEmailUrl(tokenValue, RESET_PASSWORD_PATH);
-    EmailDto emailDto = generateEmail(email, user.getName().name(), user.getName().surname(), EmailType.RESET_PASSWORD, url);
+    EmailDto emailDto = generateEmail(email, user.getName(), user.getSurname(), EmailType.RESET_PASSWORD, url);
     emailService.sendSimpleEmail(emailDto, EmailType.RESET_PASSWORD);
   }
 

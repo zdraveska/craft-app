@@ -15,7 +15,6 @@ import mk.ukim.finki.draftcraft.security.cookies.CookieUtil;
 import mk.ukim.finki.draftcraft.security.jwt.JwtService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,12 +34,11 @@ public class AuthController {
     private final UserRepository userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(HttpServletResponse response, @Valid @RequestBody LoginRequestDto loginRequest) {
+    public ResponseEntity<LoginResponseDto> login(HttpServletResponse response, @Valid @RequestBody LoginRequestDto loginRequest) throws Exception {
         try {
-            authenticationManager.authenticate(
+            var authenticate =authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-            var user = userRepository.findByEmail(loginRequest.getEmail())
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+            var user = (User) authenticate.getPrincipal();
             String token = jwtService.generateToken(user);
             String refresh = jwtService.generateRefreshToken(user);
 
@@ -51,8 +49,7 @@ public class AuthController {
                     .header(HttpHeaders.AUTHORIZATION, token)
                     .body(userMapper.toLoginResponseDto(userMapper.toDto(user), user.getRole()));
         } catch (BadCredentialsException ex) {
-            System.out.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+           throw new BadCredentialsException(ex.getMessage());
         }
     }
 
@@ -68,7 +65,7 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    //TODO
+    //TODO MI TREBA?
     //    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/refresh")
     public ResponseEntity<LoginResponseDto> refreshToken(

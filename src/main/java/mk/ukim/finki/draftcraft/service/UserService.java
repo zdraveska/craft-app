@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.service;
 
 import mk.ukim.finki.draftcraft.domain.model.user.User;
-import mk.ukim.finki.draftcraft.domain.model.user.UserRole;
+import mk.ukim.finki.draftcraft.domain.enumeration.UserRole;
 import mk.ukim.finki.draftcraft.dto.UserDto;
 import mk.ukim.finki.draftcraft.dto.input.user.ChangeUserPasswordDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateUserDto;

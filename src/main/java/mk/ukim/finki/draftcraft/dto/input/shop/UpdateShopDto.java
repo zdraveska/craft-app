@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.dto.input.shop;
 
 import mk.ukim.finki.draftcraft.annotation.ValidPhoneNumber;
-import mk.ukim.finki.draftcraft.domain.model.shop.ShopCategory;
+import mk.ukim.finki.draftcraft.domain.enumeration.ShopCategory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

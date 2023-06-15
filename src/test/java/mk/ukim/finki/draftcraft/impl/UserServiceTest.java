@@ -1,9 +1,8 @@
 package mk.ukim.finki.draftcraft.impl;
 
-import mk.ukim.finki.draftcraft.domain.model.common.EmailType;
+import mk.ukim.finki.draftcraft.domain.enumeration.EmailType;
 import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.exceptions.*;
-import mk.ukim.finki.draftcraft.domain.model.user.Name;
 import mk.ukim.finki.draftcraft.domain.model.user.User;
 import mk.ukim.finki.draftcraft.dto.EmailDto;
 import mk.ukim.finki.draftcraft.dto.UrlTokenDto;
@@ -313,7 +312,8 @@ public class UserServiceTest extends BaseServiceTest {
 
     User expectedInDb = User.builder()
         .id(user.getId())
-        .name(new Name(updateUserDto.getName(), updateUserDto.getSurname()))
+        .name(updateUserDto.getName())
+        .surname(updateUserDto.getSurname())
         .email(USER_EMAIL)
         .image(user.getImage())
         .phoneNumber(updateUserDto.getPhoneNumber())
@@ -329,8 +329,8 @@ public class UserServiceTest extends BaseServiceTest {
     //then
     assertThat(actual).isNotNull();
     assertThat(actual.getEmail()).isEqualTo(updateUserDto.getEmail());
-    assertThat(actual.getName().name()).isEqualTo(updateUserDto.getName());
-    assertThat(actual.getName().surname()).isEqualTo(updateUserDto.getSurname());
+    assertThat(actual.getName()).isEqualTo(updateUserDto.getName());
+    assertThat(actual.getName()).isEqualTo(updateUserDto.getSurname());
     assertThat(user.getId()).isEqualTo(actual.getId());
   }
 
@@ -437,7 +437,7 @@ public class UserServiceTest extends BaseServiceTest {
     verify(emailService, times(1)).sendSimpleEmail(emailCaptor.capture(), any(EmailType.class));
     EmailDto actual = emailCaptor.getValue();
     assertEquals(EmailType.RESET_PASSWORD.getSubject(), actual.getSubject());
-    String expectedBody = String.format(EmailType.RESET_PASSWORD.getBody(), user.getName().name(), user.getName().surname(), url);
+    String expectedBody = String.format(EmailType.RESET_PASSWORD.getBody(), user.getName(), user.getSurname(), url);
     assertEquals(expectedBody, actual.getBody());
     assertEquals(email, actual.getTo());
   }

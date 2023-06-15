@@ -2,7 +2,7 @@ package mk.ukim.finki.draftcraft.web.rest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.model.user.UserRole;
+import mk.ukim.finki.draftcraft.domain.enumeration.UserRole;
 import mk.ukim.finki.draftcraft.dto.UserDto;
 import mk.ukim.finki.draftcraft.dto.input.user.ChangeUserPasswordDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateUserDto;
@@ -74,8 +74,8 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(value = "/users/reset-password")
-    public ResponseEntity<UserDto> resetPassword(@Valid @RequestBody PasswordDto passwordDto, String token) {
+    @PutMapping(value = "/users/request-password")
+    public ResponseEntity<UserDto> requestPassword(@Valid @RequestBody PasswordDto passwordDto, String token) {
         return ResponseEntity.ok().body(userService.resetPassword(passwordDto, token));
     }
 

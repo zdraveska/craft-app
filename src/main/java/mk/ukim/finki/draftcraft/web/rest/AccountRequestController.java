@@ -12,36 +12,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/account-requests")
 @RequiredArgsConstructor
 public class AccountRequestController {
 
   private final AccountRequestService accountRequestService;
 
-  @PostMapping(value = "/account-requests")
+  @PostMapping()
   public ResponseEntity<AccountRequestDto> createAccountRequest(
       @Valid @RequestBody CreateAccountRequestDto createAccountRequestDto) {
     return ResponseEntity.ok().body(accountRequestService.createAccountRequest(createAccountRequestDto));
   }
 
-  //TODO
   //  @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping(value = "/account-requests")
-  public ResponseEntity<List<AccountRequestDto>> getAllAccountRequests(
-      @RequestParam(required = false) AccountRequestStatus status,
-      @RequestParam(defaultValue = "0") Integer page,
-      @RequestParam(defaultValue = "7") Integer size) {
-    return ResponseEntity.ok().body(accountRequestService.findAll(status, page, size));
+  @GetMapping()
+  public ResponseEntity<List<AccountRequestDto>> getAllAccountRequests() {
+    return ResponseEntity.ok().body(accountRequestService.findAll());
   }
 
-  @PutMapping(value = "/account-requests/confirm-email")
+  @PutMapping(value = "/confirm-email")
   public ResponseEntity<Void> confirmEmail(@RequestParam String token) {
     accountRequestService.confirmEmail(token);
     return ResponseEntity.ok().build();
   }
 
 //  @PreAuthorize("hasRole('ADMIN')")
-  @PutMapping(value = "/account-requests/{id}")
+  @PutMapping(value = "/{id}")
   public ResponseEntity<AccountRequestDto> confirmAccountRequest(
       @RequestParam AccountRequestStatus status,
       @PathVariable Long id) {
