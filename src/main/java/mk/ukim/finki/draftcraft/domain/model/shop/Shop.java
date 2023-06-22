@@ -40,6 +40,7 @@ public class Shop {
     @OneToMany
     List<Product> products;
     @OneToOne
+    @JoinColumn(name = "image_id")
     Image image;
 
 }

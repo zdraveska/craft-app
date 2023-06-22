@@ -1,6 +1,6 @@
 package mk.ukim.finki.draftcraft.domain.exceptions;
 
-import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.enumeration.AccountRequestStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

@@ -20,7 +20,7 @@ public interface UserService {
 
   UserDto findById(Long id);
 
-  List<UserDto> listAllUsers(Integer page, Integer size);
+  List<UserDto> listAllUsers();
 
   UserDto updateUser(Long id, UpdateUserDto updateUserDto);
 
@@ -30,7 +30,7 @@ public interface UserService {
 
   void requestResetPassword(String email);
 
-  UserDto resetPassword(PasswordDto passwordDto, String token);
+  UserDto requestPassword(PasswordDto passwordDto, String token);
 
   UserDto changePassword(ChangeUserPasswordDto changeUserPasswordDto);
 

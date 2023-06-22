@@ -2,18 +2,25 @@ package mk.ukim.finki.draftcraft.dto;
 
 
 import jakarta.persistence.ElementCollection;
-import lombok.Getter;
-import mk.ukim.finki.draftcraft.domain.model.common.Image;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
 import mk.ukim.finki.draftcraft.domain.enumeration.ShopCategory;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import org.apache.commons.lang3.Range;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PostDto {
 
+    Long id;
     UserDto creator;
     String name;
     String description;
@@ -22,6 +29,6 @@ public class PostDto {
     ProductCategory productCategory;
     ShopCategory shopCategory;
     @ElementCollection
-    List<String> tags;
+    ArrayList<String> tags;
     Image image;
 }

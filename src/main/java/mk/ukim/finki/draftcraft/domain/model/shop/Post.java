@@ -10,7 +10,7 @@ import mk.ukim.finki.draftcraft.domain.model.user.User;
 import org.apache.commons.lang3.Range;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 
 @Builder
 @Setter
@@ -43,9 +43,10 @@ public class Post {
     ShopCategory shopCategory;
 
     @ElementCollection
-    List<String> tags;
+    ArrayList<String> tags;
 
     @OneToOne
+    @JoinColumn(name = "image_id")
     Image image;
 
 }

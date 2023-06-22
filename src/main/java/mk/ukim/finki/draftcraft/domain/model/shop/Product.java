@@ -5,7 +5,7 @@ import lombok.*;
 import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -23,10 +23,11 @@ public class Product {
     @Enumerated(value = EnumType.STRING)
     ProductCategory category;
     @ElementCollection // https://stackoverflow.com/a/57241586
-    List<String> tags;
+    ArrayList<String> tags;
     @ManyToOne
     Shop shop;
     @OneToOne
+    @JoinColumn(name = "image_id")
     Image image;
     Integer price;
     Integer quantity;

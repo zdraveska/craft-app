@@ -1,10 +1,10 @@
 package mk.ukim.finki.draftcraft.dto;
 
-import mk.ukim.finki.draftcraft.domain.model.common.Image;
-import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
 import lombok.*;
+import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -17,7 +17,7 @@ public class ProductDto {
     String name;
     String description;
     ProductCategory category;
-    List<String> tags;
+    ArrayList<String> tags;
     Image image;
     Integer price;
     Integer quantity;

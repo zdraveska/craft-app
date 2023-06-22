@@ -8,10 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 @Data
@@ -43,5 +43,5 @@ public class UpdateProductDto {
     Integer quantity;
 
     @Size(min = 1)
-    List<String> tags;
+    ArrayList<String> tags;
 }

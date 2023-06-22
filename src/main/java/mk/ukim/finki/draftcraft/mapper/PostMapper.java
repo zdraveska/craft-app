@@ -13,7 +13,7 @@ import org.mapstruct.Named;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = UserMapper.class)
+@Mapper(componentModel = "spring")
 public interface PostMapper {
     @Mapping(target = "creator", source = "user")
     @Mapping(target = "name", source = "createPostDto.name")
@@ -21,7 +21,6 @@ public interface PostMapper {
     @Mapping(target = "id", ignore = true)
     Post createDtoToEntity(CreatePostDto createPostDto, User user);
 
-//    @Mapping(target = "name", source = "post.name")
     PostDto toDto(Post post);
 
     Post updateDtoToEntity(@MappingTarget Post post, UpdatePostDto updatePostDto);

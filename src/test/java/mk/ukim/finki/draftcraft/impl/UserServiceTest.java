@@ -1,8 +1,8 @@
 package mk.ukim.finki.draftcraft.impl;
 
 import mk.ukim.finki.draftcraft.domain.enumeration.EmailType;
-import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.exceptions.*;
+import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
 import mk.ukim.finki.draftcraft.domain.model.user.User;
 import mk.ukim.finki.draftcraft.dto.EmailDto;
 import mk.ukim.finki.draftcraft.dto.UrlTokenDto;
@@ -31,7 +31,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Pageable;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -87,42 +86,44 @@ public class UserServiceTest extends BaseServiceTest {
             tokenService);
   }
 
-//  @Test
-////  @WithMockUser(roles = ADMIN)
-//  public void shouldCreateUser() {
-//    //given
-//    CreateUserDto createUserDto = getCreateUserDto();
-//    User dbUser = userMapper.createUserDtoToEntity(createUserDto);
-//    dbUser.setId(1L);
-//    UrlToken token = generateUrlToken(null, dbUser, URL_EXPIRATION);
-//    String url = getResetPasswordUrl(token.getToken());
-//    UrlTokenDto urlTokenDto = generateTokenDto(token);
-//
-//    //when
-//    when(userRepository.findByEmail(dbUser.getEmail())).thenReturn(Optional.empty());
-//    when(userRepository.save(any(User.class))).thenReturn(dbUser);
-//    when(tokenService.createUrlToken(null, dbUser)).thenReturn(urlTokenDto);
-//    when(tokenService.generateEmailUrl(urlTokenDto.getToken(), RESET_PASSWORD_PATH)).thenReturn(url);
-//    doNothing().when(emailService).sendSimpleEmail(any(EmailDto.class), any(EmailType.class));
-//
-//    UserDto actual = userService.createUser(createUserDto);
-//
-//    //then
-//    assertThat(actual).isNotNull();
-//    assertThat(actual.getEmail()).isEqualTo(createUserDto.getEmail());
-//    assertThat(actual.getName()).isEqualTo(createUserDto.getName());
-//    assertThat(actual.getSurname()).isEqualTo(createUserDto.getSurname());
-//    assertThat(actual.getId()).isEqualTo(dbUser.getId());
-//
-//    verify(emailService, times(1)).sendSimpleEmail(emailCaptor.capture(), any(EmailType.class));
-//    EmailDto actualEmail = emailCaptor.getValue();
-//    assertEquals(createUserDto.getEmail(), actualEmail.getTo());
-//    assertEquals(EmailType.CREATE_USER.getSubject(), actualEmail.getSubject());
-//    String expectedBody = String
-//        .format(EmailType.CREATE_USER.getBody(), createUserDto.getName(), createUserDto.getSurname(), url);
-//
-//    assertEquals(expectedBody, actualEmail.getBody());
-//  }
+  @Test
+//  @WithMockUser(roles = ADMIN)
+  public void shouldCreateUser() {
+    //given
+    CreateUserDto createUserDto = getCreateUserDto();
+    User dbUser = userMapper.createUserDtoToEntity(createUserDto);
+    dbUser.setId(1L);
+    UrlToken token = generateUrlToken(null, dbUser, URL_EXPIRATION);
+    String url = getResetPasswordUrl(token.getToken());
+    UrlTokenDto urlTokenDto = generateTokenDto(token);
+
+    //when
+    when(userRepository.findByEmail(dbUser.getEmail())).thenReturn(Optional.empty());
+    when(userRepository.save(any(User.class))).thenReturn(dbUser);
+    when(tokenService.createUrlToken(null, dbUser)).thenReturn(urlTokenDto);
+    when(tokenService.generateEmailUrl(urlTokenDto.getToken(), RESET_PASSWORD_PATH)).thenReturn(url);
+    doNothing().when(emailService).sendSimpleEmail(any(EmailDto.class), any(EmailType.class));
+
+    UserDto actual = userService.createUser(createUserDto);
+
+    //then
+    assertThat(actual).isNotNull();
+    assertThat(actual.getId()).isEqualTo(1L);
+    assertThat(actual.getEmail()).isEqualTo(createUserDto.getEmail());
+    assertThat(actual.getName()).isEqualTo(createUserDto.getName());
+    assertThat(actual.getSurname()).isEqualTo(createUserDto.getSurname());
+    assertThat(actual.getPhoneNumber()).isEqualTo(createUserDto.getPhoneNumber());
+    assertThat(actual.getSurname()).isEqualTo(createUserDto.getSurname());
+
+    verify(emailService, times(1)).sendSimpleEmail(emailCaptor.capture(), any(EmailType.class));
+    EmailDto actualEmail = emailCaptor.getValue();
+    assertEquals(createUserDto.getEmail(), actualEmail.getTo());
+    assertEquals(EmailType.CREATE_USER.getSubject(), actualEmail.getSubject());
+    String expectedBody = String
+        .format(EmailType.CREATE_USER.getBody(), createUserDto.getName(), createUserDto.getSurname(), url);
+
+    assertEquals(expectedBody, actualEmail.getBody());
+  }
 
   @Test
   @WithMockUser(username = USER_EMAIL)
@@ -264,11 +265,10 @@ public class UserServiceTest extends BaseServiceTest {
   public void shouldFindAllUsers() {
     //given
     User user = generateRandomUser(true);
-    Pageable pageable = getPageable();
     //when
-    when(userRepository.findAllByOrderByNameAsc(pageable)).thenReturn(
+    when(userRepository.findAllByOrderByNameAsc()).thenReturn(
         Stream.of(user).collect(Collectors.toList()));
-    List<UserDto> usersList = userService.listAllUsers(0, 2);
+    List<UserDto> usersList = userService.listAllUsers();
 
     //then
     assertThat(usersList.size()).isEqualTo(1);
@@ -330,7 +330,7 @@ public class UserServiceTest extends BaseServiceTest {
     assertThat(actual).isNotNull();
     assertThat(actual.getEmail()).isEqualTo(updateUserDto.getEmail());
     assertThat(actual.getName()).isEqualTo(updateUserDto.getName());
-    assertThat(actual.getName()).isEqualTo(updateUserDto.getSurname());
+    assertThat(actual.getSurname()).isEqualTo(updateUserDto.getSurname());
     assertThat(user.getId()).isEqualTo(actual.getId());
   }
 
@@ -456,7 +456,7 @@ public class UserServiceTest extends BaseServiceTest {
         .thenReturn(passwordDto.getPassword());
     when(userRepository.save(any(User.class))).thenReturn(user);
 
-    userService.resetPassword(passwordDto, token.getToken());
+    userService.requestPassword(passwordDto, token.getToken());
 
     //then
     assertThat(user.getPassword()).isEqualTo(passwordDto.getPassword());

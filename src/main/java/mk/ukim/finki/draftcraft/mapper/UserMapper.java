@@ -26,6 +26,7 @@ public interface UserMapper {
     List<UserDto> listToDto(List<User> usersList);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "email", ignore = true)
     User updateDtoToEntity(@MappingTarget User user, UpdateUserDto updateUserDto);
 
     @Named("mapRole")

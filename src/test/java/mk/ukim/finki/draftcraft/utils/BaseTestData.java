@@ -1,22 +1,23 @@
 package mk.ukim.finki.draftcraft.utils;
 
 import lombok.SneakyThrows;
-import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
-import mk.ukim.finki.draftcraft.domain.enumeration.ShopCategory;
-import mk.ukim.finki.draftcraft.domain.enumeration.UserRole;
+import mk.ukim.finki.draftcraft.domain.enumeration.*;
 import mk.ukim.finki.draftcraft.domain.model.common.Address;
 import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import mk.ukim.finki.draftcraft.domain.model.common.UrlToken;
-import mk.ukim.finki.draftcraft.domain.model.shop.*;
-import mk.ukim.finki.draftcraft.domain.model.user.*;
+import mk.ukim.finki.draftcraft.domain.model.shop.Post;
+import mk.ukim.finki.draftcraft.domain.model.shop.Product;
+import mk.ukim.finki.draftcraft.domain.model.shop.Shop;
+import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
+import mk.ukim.finki.draftcraft.domain.model.user.User;
+import mk.ukim.finki.draftcraft.dto.EmailDto;
 import mk.ukim.finki.draftcraft.dto.UrlTokenDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreatePostDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.CreateProductDto;
+import mk.ukim.finki.draftcraft.dto.input.shop.UpdatePostDto;
 import mk.ukim.finki.draftcraft.dto.input.shop.UpdateProductDto;
 import mk.ukim.finki.draftcraft.dto.input.user.*;
 import org.junit.jupiter.params.provider.Arguments;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -25,6 +26,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.Stream;
+
+import static mk.ukim.finki.draftcraft.domain.enumeration.UserRole.BUYER;
 
 public class BaseTestData {
 
@@ -70,10 +73,11 @@ public class BaseTestData {
 
     protected Product generateRandomProduct(Boolean withId) {
         long random = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() + new Random().nextLong();
-        return getProduct(withId ? random : null, "name", ProductCategory.CLOTHES, "description", 1000, 10, List.of("obuvki", "patiki", "converse"), generateRandomShop(true), generateImage());
+        var tags = new ArrayList<>(List.of("obuvki", "patiki", "converse"));
+        return getProduct(withId ? random : null, "name", ProductCategory.CLOTHES, "description", 1000, 10, tags, generateRandomShop(true), generateImage());
     }
 
-    private Product getProduct(Long id, String name, ProductCategory category, String description, int price, int quantity, List<String> tags, Shop shop, Image image) {
+    private Product getProduct(Long id, String name, ProductCategory category, String description, int price, int quantity, ArrayList<String> tags, Shop shop, Image image) {
         return Product.builder()
                 .id(id)
                 .name(name)
@@ -125,18 +129,6 @@ public class BaseTestData {
                 .build();
     }
 
-
-    //
-//    protected MockMultipartFile generateMultipartFileCsv() throws IOException {
-//        return
-//                new MockMultipartFile(
-//                        "file",
-//                        "shop.csv",
-//                        MediaType.MULTIPART_FORM_DATA_VALUE,
-//                        new FileInputStream("src/test/resources/shop.csv")
-//                );
-//    }
-//
     @SneakyThrows
     protected List<Product> generateProductsFromShop(Shop shop) {
         Product firstProduct = generateRandomProduct(false);
@@ -145,17 +137,13 @@ public class BaseTestData {
         secondProduct.setShop(shop);
         return new ArrayList<>(List.of(firstProduct, secondProduct));
     }
-//
-//    protected Product generateRandomProduct(Boolean withId, String name, ProductCategory category) {
-//        return getProduct(withId ? new Date().getTime() : null, name, category, "description", 300, 10, List.of("tag"), getShop());
-//    }
-//
+
     protected AccountRequest generateRandomAccountRequest(Boolean withId, Boolean emailConfirmed) {
         return getAccountRequest(withId ? new Date().getTime() : null, UUID.randomUUID() + "@gmail.com", "name",
-                "surname", emailConfirmed, LocalDate.now());
+                "surname", BUYER, emailConfirmed, LocalDate.now());
     }
 
-    protected AccountRequest getAccountRequest(Long id, String email, String name, String surname, Boolean emailConfirmed,
+    protected AccountRequest getAccountRequest(Long id, String email, String name, String surname, UserRole role, Boolean emailConfirmed,
                                                LocalDate date) {
         return AccountRequest.builder()
                 .name(name)
@@ -164,6 +152,7 @@ public class BaseTestData {
                 .status(AccountRequestStatus.PENDING)
                 .createdDate(date)
                 .emailConfirmed(emailConfirmed)
+                .role(role)
                 .build();
     }
 
@@ -187,25 +176,38 @@ public class BaseTestData {
 
     }
 
+    protected CreateAccountRequestDto getCreateAccountRequestDto() {
+        return CreateAccountRequestDto.builder()
+                .name("name")
+                .surname("surname")
+                .email(UUID.randomUUID() + "@gmail.com")
+                .role("BUYER")
+                .phoneNumber("070123456")
+                .build();
+    }
+
     protected CreateProductDto getCreateProductDto() {
+        var tags = new ArrayList<>(List.of("tag1", "tag2"));
         return CreateProductDto.builder()
                 .name("name")
                 .category(ProductCategory.SHOES)
                 .description("description")
-                .tags(List.of("tag1", "tag2"))
+                .tags(tags)
                 .build();
     }
 
     protected UpdateProductDto getUpdateProductDto() {
+        var tags = new ArrayList<>(List.of("tagNew1", "tagNew2"));
         return UpdateProductDto.builder()
                 .name("nameUpdated")
                 .category(ProductCategory.OTHER)
                 .description("descrUpdated")
-                .tags(List.of("tagNew1", "tagNew2"))
+                .tags(tags)
                 .build();
     }
 
     protected CreatePostDto getCreatePostDto() {
+        var tags = new ArrayList<>(List.of("tag1", "tag2"));
         return CreatePostDto.builder()
                 .name("name")
                 .productCategory("OTHER")
@@ -213,7 +215,20 @@ public class BaseTestData {
                 .description("description")
                 .priceRangeMin(500)
                 .priceRangeMax(1000)
-                .tags(List.of("tag","taggg"))
+                .tags(tags)
+                .build();
+    }
+
+    protected UpdatePostDto getUpdatePostDto() {
+        var tags = new ArrayList<>(List.of("tagNew1", "tagNew2"));
+        return UpdatePostDto.builder()
+                .name("newName")
+                .productCategory("CRAFTS")
+                .shopCategory("STORE")
+                .description("newDescription")
+                .priceRangeMin(200)
+                .priceRangeMax(500)
+                .tags(tags)
                 .build();
     }
 
@@ -251,10 +266,6 @@ public class BaseTestData {
         return BASE_URL + RESET_PASSWORD_PATH + token;
     }
 
-    protected Pageable getPageable() {
-        return PageRequest.of(0, 2);
-    }
-
     protected static Stream<Arguments> invalidPasswords() {
         return Stream.of(
                 Arguments.of("p@ssword"),
@@ -290,54 +301,24 @@ public class BaseTestData {
         );
     }
 
-    //
-////    public static EmailDto generateEmail(EmailType type) {
-////        return EmailDto.builder()
-////                .to("name.surname@valtech.com")
-////                .subject(type.getSubject())
-////                .body(type.getBody())
-////                .toName("Name")
-////                .toSurname("Surname")
-////                .url("http://localhost:8080")
-////                .build();
-////    }
-//
-//
-//
-//
-//
-//
-//    protected CreateUserDto getCreateUserDto() {
-//        return CreateUserDto.builder()
-//                .name("name")
-//                .surname("surname")
-//                .username("username")
-//                .email(UUID.randomUUID() + "@gmail.com").build();
-//    }
-//
-////    protected CreateAccountRequestDto getAccountRequestDto() {
-////        return CreateAccountRequestDto.builder()
-////                .name("name")
-////                .surname("surname")
-////                .email(UUID.randomUUID() + "@valtech.com").build();
-////    }
-//
-////
-//
-////
-//
-////
-//
-////
-////
-//
-//    protected String getConfirmEmailUrl(String baseUrl, String confirmEmailPath, String token) {
-//        return baseUrl + confirmEmailPath + token;
-//    }
+    public static EmailDto generateEmail(EmailType type) {
+        return EmailDto.builder()
+                .to("zdraveskaema@gmail.com")
+                .subject(type.getSubject())
+                .body(type.getBody())
+                .toName("Name")
+                .toSurname("Surname")
+                .url("http://localhost:8080")
+                .build();
+    }
+
+    protected String getConfirmEmailUrl(String baseUrl, String confirmEmailPath, String token) {
+        return baseUrl + confirmEmailPath + token;
+    }
 
     protected User generateRandomUser(Boolean withId) {
         long random = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() + new Random().nextLong();
-        return getUser(withId ? random : null, random + "@gmail.com", "name", "surname", "071123456", UserRole.BUYER);
+        return getUser(withId ? random : null, random + "@gmail.com", "name", "surname", "071123456", BUYER);
     }
 
     protected User getUser(Long id, String email, String name, String surname, String phoneNumber, UserRole role) {
@@ -347,7 +328,6 @@ public class BaseTestData {
                 .name(name)
                 .surname(surname)
                 .phoneNumber(phoneNumber)
-                .image(generateImage())
                 .role(role)
                 .build();
     }

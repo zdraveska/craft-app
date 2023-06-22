@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+    url: jdbc:h2:mem:db
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: none
+  mail:
+      password: springboot
+      username: test@gmail.com
+      host: 127.0.0.1
+      port: 3025 # default protocol port + 3000 as offset
+      protocol: smtp
+#    username: test@gmail.com
+#    password: password
+#    protocol: smtp
+#    properties:
+#      mail:
+#        debug: false
+#        smtp:
+#          debug: false
+#          auth: true
+#          starttls: true
+#    test-connection: false

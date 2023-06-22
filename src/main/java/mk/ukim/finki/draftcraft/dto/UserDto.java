@@ -13,13 +13,11 @@ import mk.ukim.finki.draftcraft.domain.model.common.Image;
 public class UserDto {
 
   Long id;
-
   String name;
-
+  String surname;
   String username;
-
   String email;
-
+  String phoneNumber;
   Image image;
 
 }

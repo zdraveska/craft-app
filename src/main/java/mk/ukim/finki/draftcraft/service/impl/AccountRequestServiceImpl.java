@@ -9,7 +9,7 @@ import mk.ukim.finki.draftcraft.domain.exceptions.AccountRequestEmailIsAlreadyCo
 import mk.ukim.finki.draftcraft.domain.exceptions.AccountRequestNotFoundException;
 import mk.ukim.finki.draftcraft.domain.exceptions.DuplicateEmailException;
 import mk.ukim.finki.draftcraft.domain.model.user.AccountRequest;
-import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.enumeration.AccountRequestStatus;
 import mk.ukim.finki.draftcraft.dto.AccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.EmailDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateAccountRequestDto;
@@ -73,14 +73,20 @@ public class AccountRequestServiceImpl implements AccountRequestService {
 
   @Cacheable(cacheNames = {"account-requests"})
   @Override
-  public List<AccountRequestDto> findAll() {
-    List<AccountRequest> accountRequests = accountRequestRepository.findAll();
+  public List<AccountRequestDto> findAll(AccountRequestStatus status) {
+    List<AccountRequest> accountRequests;
+    if (status != null) {
+      accountRequests = accountRequestRepository
+              .findAllByStatusAndEmailConfirmedIsTrueOrderByNameAscSurnameAsc(status);
+    } else {
+      accountRequests = accountRequestRepository.findAllByEmailConfirmedIsTrueOrderByNameAscSurnameAsc();
+    }
     return accountRequestMapper.listToDto(accountRequests);
   }
 
   @CacheEvict(cacheNames = {"account-requests"}, key = "#id", allEntries = true)
   @Override
-  public AccountRequestDto acceptAccountRequest(Long id, AccountRequestStatus status) {
+  public AccountRequestDto handleAccountRequest(Long id, AccountRequestStatus status) {
     AccountRequest accountRequest = accountRequestRepository.findById(id)
         .orElseThrow(() -> new AccountRequestNotFoundException(id));
 
@@ -95,6 +101,10 @@ public class AccountRequestServiceImpl implements AccountRequestService {
       userService.createUser(createUserDto);
       log.info("New user has been successfully added");
     } else {
+      EmailDto emailDto = generateEmail(accountRequest.getEmail(), accountRequest.getName(),
+              accountRequest.getSurname(),
+              EmailType.ACCOUNT_REQUEST_DECLINED, null);
+      emailService.sendSimpleEmail(emailDto, EmailType.ACCOUNT_REQUEST_DECLINED);
       log.info("The request was denied");
     }
 

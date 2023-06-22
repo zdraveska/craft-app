@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Builder
@@ -39,6 +39,6 @@ public class CreatePostDto {
 
     @NotEmpty
     @Size(min = 1)
-    List<String> tags;
+    ArrayList<String> tags;
 
 }

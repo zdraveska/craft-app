@@ -1,6 +1,7 @@
 //package mk.ukim.finki.draftcraft.rest;
 //
-//import mk.ukim.finki.draftcraft.domain.enumerations.EmailType;
+//import lombok.SneakyThrows;
+//import mk.ukim.finki.draftcraft.domain.enumeration.EmailType;
 //import mk.ukim.finki.draftcraft.dto.EmailDto;
 //import mk.ukim.finki.draftcraft.service.impl.EmailServiceImpl;
 //import mk.ukim.finki.draftcraft.utils.BaseIntegrationTest;
@@ -9,15 +10,10 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 //import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.security.test.context.support.WithMockUser;
-//
-//import javax.mail.MessagingException;
-//import javax.mail.internet.MimeMessage;
-//import java.io.IOException;
 //
 //import static org.assertj.core.api.Assertions.assertThat;
 //
-//@SpringBootTest
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@AutoConfigureMockMvc
 //class EmailServiceIT extends BaseIntegrationTest {
 //
@@ -25,8 +21,10 @@
 //  private EmailServiceImpl emailService;
 //
 //  @Test
-//  @WithMockUser
-//  public void sendEmailTest() throws MessagingException, IOException {
+////  @WithMockUser
+//  @SneakyThrows
+////  @Disabled
+//  public void sendEmailTest()  {
 //
 //    // given
 //    EmailType type = EmailType.CONFIRM_EMAIL_ADDRESS;
@@ -36,10 +34,10 @@
 //    emailService.sendSimpleEmail(emailDto, type);
 //
 //    // then
-//    MimeMessage[] receivedMessages = smtpServer.getReceivedMessages();
+//    var receivedMessages = smtpServer.getReceivedMessages();
 //    Assertions.assertEquals(1, receivedMessages.length);
 //
-//    MimeMessage current = receivedMessages[0];
+//    var current = receivedMessages[0];
 //
 //    Assertions.assertEquals(emailDto.getSubject(), current.getSubject());
 //    Assertions.assertEquals(emailDto.getTo(), current.getAllRecipients()[0].toString());
@@ -49,8 +47,6 @@
 //    assertThat(actualBody).contains(emailDto.getToName());
 //    assertThat(actualBody).contains(emailDto.getUrl());
 //    assertThat(actualBody).contains(emailDto.getBody());
-//    assertThat(actualBody).contains(type.getButton().toString());
-//
-//  }
-//
+//    assertThat(actualBody).contains(type.getButton());
+//    }
 //}

@@ -40,6 +40,8 @@ public class SecurityConfiguration {
 //                                .requestMatchers(HttpMethod.PUT, "/api/account-requests/{id}").permitAll()
 //                                .requestMatchers(HttpMethod.POST, "/api/users/password-complexity").permitAll()
 //                                .anyRequest().authenticated())
+                .securityContext((securityContext) -> securityContext
+                        .requireExplicitSave(true))
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

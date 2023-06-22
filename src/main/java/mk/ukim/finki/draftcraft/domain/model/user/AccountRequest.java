@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mk.ukim.finki.draftcraft.domain.enumeration.AccountRequestStatus;
 import mk.ukim.finki.draftcraft.domain.enumeration.UserRole;
 
 import java.time.LocalDate;

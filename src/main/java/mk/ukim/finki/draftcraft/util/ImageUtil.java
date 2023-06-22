@@ -1,6 +1,7 @@
 package mk.ukim.finki.draftcraft.util;
 
 import mk.ukim.finki.draftcraft.domain.exceptions.ImageException;
+import mk.ukim.finki.draftcraft.domain.model.common.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -63,4 +64,12 @@ public class ImageUtil {
     }
   }
 
+  public static Image getImageFrom(MultipartFile file) {
+    var bytes = compressMultipartFile(file);
+    return Image.builder()
+            .image(bytes)
+            .imageName(file.getName())
+            .imageContentType(file.getContentType())
+            .build();
+  }
 }

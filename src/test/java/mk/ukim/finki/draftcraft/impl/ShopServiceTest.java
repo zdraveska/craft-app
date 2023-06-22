@@ -121,15 +121,4 @@ class ShopServiceTest extends BaseTestData {
     assertTrue(actualMessage.contains(expectedMessage));
   }
 
-//  @Test
-//  public void shouldCleanUpShopEntity() {
-//    //when
-//    doNothing().when(shopRepository).deleteByRestaurant(null);
-//
-//    shopService.cleanUpShopEntity();
-//
-//    //then
-//    verify(shopRepository, times(1)).deleteByRestaurant(null);
-//  }
-
 }

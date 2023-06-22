@@ -1,15 +1,20 @@
 package mk.ukim.finki.draftcraft.dto.input.shop;
 
-import mk.ukim.finki.draftcraft.domain.enumeration.ProductCategory;
-import mk.ukim.finki.draftcraft.domain.enumeration.ShopCategory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.apache.commons.lang3.Range;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UpdatePostDto {
 
     @NotBlank
@@ -24,13 +29,17 @@ public class UpdatePostDto {
 
     @NotNull
     @NotEmpty
-    Range<Integer> priceRange;
+    Integer priceRangeMin;
 
     @NotNull
-    ProductCategory productCategory;
+    @NotEmpty
+    Integer priceRangeMax;
 
     @NotNull
-    ShopCategory shopCategory;
+    String productCategory;
+
+    @NotNull
+    String shopCategory;
 
     @NotEmpty
     @Size(min = 1)

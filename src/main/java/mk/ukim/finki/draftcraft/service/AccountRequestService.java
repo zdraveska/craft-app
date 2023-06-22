@@ -1,7 +1,7 @@
 package mk.ukim.finki.draftcraft.service;
 
 
-import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.enumeration.AccountRequestStatus;
 import mk.ukim.finki.draftcraft.dto.AccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateAccountRequestDto;
 
@@ -13,7 +13,7 @@ public interface AccountRequestService {
 
   void confirmEmail(String token);
 
-  List<AccountRequestDto> findAll();
+  List<AccountRequestDto> findAll(AccountRequestStatus status);
 
-  AccountRequestDto acceptAccountRequest(Long id, AccountRequestStatus status);
+  AccountRequestDto handleAccountRequest(Long id, AccountRequestStatus status);
 }

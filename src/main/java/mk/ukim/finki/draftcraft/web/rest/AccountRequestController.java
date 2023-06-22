@@ -2,7 +2,7 @@ package mk.ukim.finki.draftcraft.web.rest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mk.ukim.finki.draftcraft.domain.model.user.AccountRequestStatus;
+import mk.ukim.finki.draftcraft.domain.enumeration.AccountRequestStatus;
 import mk.ukim.finki.draftcraft.dto.AccountRequestDto;
 import mk.ukim.finki.draftcraft.dto.input.user.CreateAccountRequestDto;
 import mk.ukim.finki.draftcraft.service.AccountRequestService;
@@ -18,16 +18,16 @@ public class AccountRequestController {
 
   private final AccountRequestService accountRequestService;
 
-  @PostMapping()
+  @PostMapping
   public ResponseEntity<AccountRequestDto> createAccountRequest(
       @Valid @RequestBody CreateAccountRequestDto createAccountRequestDto) {
     return ResponseEntity.ok().body(accountRequestService.createAccountRequest(createAccountRequestDto));
   }
 
   //  @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping()
-  public ResponseEntity<List<AccountRequestDto>> getAllAccountRequests() {
-    return ResponseEntity.ok().body(accountRequestService.findAll());
+  @GetMapping
+  public ResponseEntity<List<AccountRequestDto>> getAllAccountRequests(@RequestParam(required = false) AccountRequestStatus status) {
+    return ResponseEntity.ok().body(accountRequestService.findAll(status));
   }
 
   @PutMapping(value = "/confirm-email")
@@ -41,7 +41,7 @@ public class AccountRequestController {
   public ResponseEntity<AccountRequestDto> confirmAccountRequest(
       @RequestParam AccountRequestStatus status,
       @PathVariable Long id) {
-    return ResponseEntity.ok().body(accountRequestService.acceptAccountRequest(id, status));
+    return ResponseEntity.ok().body(accountRequestService.handleAccountRequest(id, status));
   }
 
 }

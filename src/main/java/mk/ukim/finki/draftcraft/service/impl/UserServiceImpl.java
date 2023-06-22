@@ -27,8 +27,6 @@ import mk.ukim.finki.draftcraft.service.UserService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,7 +56,7 @@ public class UserServiceImpl implements UserService {
   private final PasswordEncoder passwordEncoder;
   private final TokenService tokenService;
 
-  static final String RESET_PASSWORD_PATH = "/api/users/reset-password?token=";
+  static final String RESET_PASSWORD_PATH = "/api/users/request-password?token=";
 
 public UserServiceImpl(UserRepository userRepository,
                        ImageRepository imageRepository,
@@ -107,12 +105,9 @@ public UserServiceImpl(UserRepository userRepository,
 
   @Cacheable(cacheNames = {"users"})
   @Override
-  public List<UserDto> listAllUsers(Integer page, Integer size) {
-    Pageable pageable = PageRequest.of(page, size);
-
+  public List<UserDto> listAllUsers() {
     log.info("List all users");
-    return userMapper.listToDto(userRepository.findAllByOrderByNameAsc(pageable).stream().toList());
-//        .sorted(Comparator.comparing(User::getStatus)).collect(Collectors.toList()));
+    return userMapper.listToDto(userRepository.findAllByOrderByNameAsc().stream().toList());
   }
 
   @Cacheable(cacheNames = {"users"}, key = "#email")
@@ -190,8 +185,8 @@ public UserServiceImpl(UserRepository userRepository,
         .orElseThrow(() -> new UserNotFoundException(id));
     checkIfAlphabetic(updateUserDto.getName(), updateUserDto.getSurname());
     checkUserEditPermission(user.getEmail(), id, updateUserDto.getEmail());
-
-    user = userRepository.save(userMapper.updateDtoToEntity(user, updateUserDto));
+    user = userMapper.updateDtoToEntity(user, updateUserDto);
+    userRepository.save(user);
     log.info("User {} updated", user);
     return userMapper.toDto(user);
   }
@@ -207,11 +202,11 @@ public UserServiceImpl(UserRepository userRepository,
   }
 
   @Override
-  public UserDto resetPassword(PasswordDto passwordDto, String tokenValue) {
+  public UserDto requestPassword(PasswordDto passwordDto, String tokenValue) {
     UrlToken token = tokenService.findByToken(tokenValue);
     User user = token.getUser();
     user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
-    log.info("Reset password");
+    log.info("Set password");
     return userMapper.toDto(userRepository.save(user));
   }
 
